@@ -1,4 +1,4 @@
-# Slack->Airtable Link Scraper
+# Slack->Airtable Link Salvager
 
 ### Motivation
 
