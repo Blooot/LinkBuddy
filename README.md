@@ -10,6 +10,8 @@ One caveat: Airtable doesn't expose the ability to request a list of your Airtab
 
 Okay two caveats: Slack makes you set up a bot since May 2020 rather than giving you a web API. So, you'll need a slack bot with the proper scope/permissions for this to work. This program uses two endpoints: https://slack.com/api/conversations.history and https://slack.com/api/conversations.list. Make sure your bot has the correct permissions for them
 
+...three: This only supports posting to three fields in Airtable, namely "Name", "URL", and "Description". These fields show up in a URL preview in Slack.
+
 ### How to run it
 
 I recommend running it with a shell script. Mine looks something like:
