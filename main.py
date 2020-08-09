@@ -2,6 +2,7 @@ import os
 import json
 import requests
 import time
+import re
 
 import argparse
 
@@ -27,6 +28,9 @@ if not args.slack:
     raise Exception("You must enter the target Slack channel")
 if not args.airtable:
     raise Exception("You must enter the target Airtable Base")
+
+URL_REGEX = re.compile(
+    "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
 
 """Airtable Setup"""
 AIRTABLE_RATE_LIMITER_IN_SECONDS = 5
@@ -59,6 +63,12 @@ def airtable_chonkify_into_posts(res):
                         fields["fields"][slack_to_airtable_fields[s]
                                          ] = attachment[s]
                 base.append(fields)
+        else:
+            if 'text' in message:
+                url_match = URL_REGEX.findall(message['text'])
+                if url_match:
+                    for url in url_match:
+                        base.append({"fields": {"URL": url}})
     # we can only post 10 records to airtable at a time
     return chonkify(base)
 
